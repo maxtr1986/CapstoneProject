@@ -15,7 +15,7 @@ Moreno as the director of marketing has set a clear goal to design marketing str
 2. Why would casual riders buy Cyclistic annual memberships?
 3. How can Cyclistic use digital media to influence casual riders to become members?
 
-The analysis will be done by using [Cyclistic historical bike trip data](https://divvy-tripdata.s3.amazonaws.com/index.html) to identify trends.
+The analysis will be done by using Cyclistic historical bike trip data to identify trends.
 
 ### 1.3. The Stakeholders
 1. Lily Moreno: The director of marketing. Moreno is responsible for the development of campaigns and initiatives to promote the bike-share program. These may include email, social media, and other channels.
