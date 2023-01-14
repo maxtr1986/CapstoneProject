@@ -21,3 +21,10 @@ The analysis will be done by using Cyclistic historical bike trip data to identi
 1. Lily Moreno: The director of marketing. Moreno is responsible for the development of campaigns and initiatives to promote the bike-share program. These may include email, social media, and other channels.
 2. Cyclistic marketing analytics team: A team of data analysts who are responsible for collecting, analyzing, and reporting data that helps guide Cyclistic marketing strategy.
 3. Cyclistic executive team: The executive team that will decide whether to approve the recommended marketing program.
+
+
+## 2. Data Preparation
+
+In order to analyze the business tasks given, first we will need to download [Cyclistic's historical trip data](https://divvy-tripdata.s3.amazonaws.com/index.html). All their trip data are generated from their bikes trip log and stored as monthly csv files and compressed as zip files. For this analysis we will be using the previous 12 months of trip data which will be from December 2021 to November 2022.
+
+All the downloaded files will be saved in a folder named cyclistic_1year_data, then we will extract each one of them so we will get the csv files. We then rename all those csv name as cyclistic_tripdata_[yyyymm].csv and sort them according to the period.
