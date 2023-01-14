@@ -25,6 +25,27 @@ The analysis will be done by using Cyclistic historical bike trip data to identi
 
 ## 2. Data Preparation
 
-In order to analyze the business tasks given, first we will need to download [Cyclistic's historical trip data](https://divvy-tripdata.s3.amazonaws.com/index.html). All their trip data are generated from their bikes trip log and stored as monthly csv files and compressed as zip files. For this analysis we will be using the previous 12 months of trip data which will be from December 2021 to November 2022.
+In order to analyze the business tasks given, first I will need to download [Cyclistic's historical trip data](https://divvy-tripdata.s3.amazonaws.com/index.html). All their trip data are generated from their bikes trip log and stored as monthly csv files and compressed as zip files. For this analysis I will be using the previous 12 months of trip data which will be from December 2021 to November 2022.
 
-All the downloaded files will be saved in a folder named cyclistic_1year_data, then we will extract each one of them so we will get the csv files. We then rename all those csv name as cyclistic_tripdata_[yyyymm].csv and sort them according to the period.
+All the downloaded files will be saved in a folder named cyclistic_1year_data, then I will extract each one of them so I will get the csv files. After that, I rename all those csv name as cyclistic_tripdata_[yyyymm].csv and sort them according to the period.
+
+
+## 3. Processing the Data
+During this step, I will be using spreadsheet (MS Excel), SQL (BigQuery), and Tableau for visualization.
+
+### 3.1. Spreadsheet
+This is the first step taken where I will import each of csv file into an Excel file (.xlsx). 
+
+Once imported, I will create a new column named "ride_length" where I will substarct the value from "ended_at" column and "started_at" column. This value will be used to analyze how long each rider use Cyclistic's service on one trip.
+
+In this step, I found some inconsistent entries, where the end time (ended_at) value was earlier than the start time (started_at) which might due to some glitch in their logging system. However, since there are no clear instruction or documentation on how the logging system works, so the simple workaround solutions are either to delete the incostistent entries or swap the time so it can be calculated. For this step I choose to just swap the time.
+
+The next step I did was to create another new column called "day_of_week" where I will be using WEEKDAY() function to extract what day fall on each repective date on started_at column. The result will be in number format of 1 to 7, where 1 represents Sunday and 7 represents Saturday. Unfortunately, I won't be using the results from this new column for some reasons which I will explain later in **conclusion part**.
+
+After I've done modifying the Excel file, I convert them back to csv file so it can be use in the next step processing in SQL.
+
+All those steps above were replicated for all 12 csv files.
+
+Actually, there are more things to be cleaned like plenty of missing values (NULL) for start station and end stations. However, since the files are pretty big with hundreds of thousands of rows per file, it will took a lot of my hardware resources an run extremely slow. That's why I choose to process them furter in SQL.
+
+### 3.2. SQL (BigQuery)
