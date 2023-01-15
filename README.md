@@ -31,7 +31,7 @@ All the downloaded files will be saved in a folder named cyclistic_1year_data, t
 
 
 ## 3. Processing the Data
-During this step, I will be using spreadsheet (MS Excel), SQL (BigQuery), and Tableau for visualization.
+During this step, I will be using spreadsheet (MS Excel) and SQL (BigQuery).
 
 ### 3.1. Spreadsheet
 This is the first step taken where I will import each of csv file into an Excel file (.xlsx). 
@@ -49,3 +49,58 @@ All those steps above were replicated for all 12 csv files.
 Actually, there are more things to be cleaned like plenty of missing values (NULL) for start station and end stations. However, since the files are pretty big with hundreds of thousands of rows per file, it will took a lot of my hardware resources an run extremely slow. That's why I choose to process them furter in SQL.
 
 ### 3.2. SQL (BigQuery)
+In this step, I started by importing all 12 csv files into BigQuery. However, since some of the csv files are quite big (more than 100 MB), so I decided to transfer them all to Google Cloud Drive. Once all the files completely imported to BigQuery then I continue with data cleaning processes.
+
+a. First, I combined those 12 tables into one single table by using UNION ALL in this [following query](https://console.cloud.google.com/bigquery?sq=505738757381:411ddfd2ae884edb81b0dbec661c55f3):
+
+SELECT *<br />
+FROM <br />
+( <br />
+SELECT * <br />
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202112` <br />
+UNION ALL <br />
+SELECT * <br />
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202201` <br />
+UNION ALL <br />
+SELECT * <br />
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202202` <br />
+UNION ALL <br />
+SELECT * <br />
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202203` <br />
+UNION ALL <br />
+SELECT * <br />
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202204` <br />
+UNION ALL <br />
+SELECT * <br />
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202205` <br />
+UNION ALL <br />
+SELECT * <br />
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202206` <br />
+UNION ALL <br />
+SELECT * <br />
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202207` <br />
+UNION ALL <br />
+SELECT * <br />
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202208` <br />
+UNION ALL <br />
+SELECT * <br />
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202209` <br />
+UNION ALL <br />
+SELECT * <br />
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202210` <br />
+UNION ALL <br />
+SELECT * <br />
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202211` <br />
+) <br />
+
+The combined table then named as "tripdata_12months" which consist of 4,334,153 rows of data. from December 2021 to November 2022.
+
+b. The next step is to remove all rows where the start_station_name or end_station_name have null values:
+
+DELETE FROM `capstone-case-1.cyclistic_monthly.tripdata_12months` <br />
+WHERE start_station_name IS NULL OR end_station_name IS NULL <br />
+
+c. Then I removed all rows where the ride_length below 1 minute:
+
+DELETE FROM `capstone-case-1.cyclistic_monthly.tripdata_12months` <br />
+WHERE ride_length <= '00:00:59' <br />
