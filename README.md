@@ -226,7 +226,6 @@ From the charts shown above, I draw some coclusions as follow:
 The following table will show a list of stations which function as both start station and end station and have more casual users than member users.
 
 ![Dashboard 2](https://user-images.githubusercontent.com/122529512/212599740-a3d7d625-005e-46af-9bdc-6781a2addd54.png)
-
 [Tableau link](https://public.tableau.com/views/Top30StationsWithMoreCasualUsers/Dashboard2?:language=en-US&:display_count=n&:origin=viz_share_link)
 
 Since the main goal for this analysis was to convert casual users to member users, I find that this table will be usefull for targeted advertisement. I choose a simple table format so the stakeholders could easily see where they might want to intensify their marketing program in order to convert more casual users.
