@@ -205,6 +205,37 @@ The table shows that there are 30 stations that both function as start station a
 4. There are significant increase of user number during mid year which brings me to a hypothesis that people mobility are correlated with seasons.
 
 
-## 5. Sharing the Insight
+## 5. Sharing the Findings
+
+In order to share and easily explain my findings from the analysis process, I made a dashboard containing charts and a table from the queried tables before.
+
+### 5.1. Difference Number of User
+
+![Dashboard 1](https://user-images.githubusercontent.com/122529512/212592210-d25b4153-f295-40ef-b1fe-188250fcb3cd.png)
+
+[Tableau link](https://public.tableau.com/views/CyclisticsUsersDifference/Dashboard1?:language=en-US&:display_count=n&:origin=viz_share_link)
+
+From the charts shown above, I draw some coclusions as follow:
+1. Casual users are more active during weekends (Saturday and Sunday) while Member users are more active during work days (especially from Wednesday to Friday).
+2. Overall, total number of member users are higher than casual users.
+3. On average, casual users use the service twice longer (around 20 minutes) compared to member users (around 10 minutes).
+4. There are significant increase of users from May to October on both casual and member users. From this chart I drew a hypothesis that users are highly mobile during late spring to early autumn and their mobility are highly affected by seasons. 
+
+### 5.2. Top 30 Stations with More Casual User
+
+The following table will show a list of stations which function as both start station and end station and have more casual users than member users.
+
+![Dashboard 2](https://user-images.githubusercontent.com/122529512/212599740-a3d7d625-005e-46af-9bdc-6781a2addd54.png)
+
+[Tableau link](https://public.tableau.com/views/Top30StationsWithMoreCasualUsers/Dashboard2?:language=en-US&:display_count=n&:origin=viz_share_link)
+
+Since the main goal for this analysis was to convert casual users to member users, I find that this table will be usefull for targeted advertisement. I choose a simple table format so the stakeholders could easily see where they might want to intensify their marketing program in order to convert more casual users.
+
+## 6. Closing
+
+Based on the previous analysis and findings, here are my top 3 recommendations according to the business task given before:
+1. Target the top 30 stations (or less if there's budget constraint) to intensify marketing programs and advertisement.
+2. Provide special rates to attract existing casual users to convert as member, such as family membership, member get member perks, etc.
+3. Use digital services for advertisement, such as location based SMS or promotion email to existing members, social media page, or install screen billboards on those top list stations.  
 
 
