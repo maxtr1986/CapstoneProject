@@ -40,7 +40,7 @@ Once imported, I will create a new column named "ride_length" where I will subst
 
 In this step, I found some inconsistent entries, where the end time (ended_at) value was earlier than the start time (started_at) which might due to some glitch in their logging system. However, since there are no clear instruction or documentation on how the logging system works, so the simple workaround solutions are either to delete the incostistent entries or swap the time so it can be calculated. For this step I choose to just swap the time.
 
-The next step I did was to create another new column called "day_of_week" where I will be using WEEKDAY() function to extract what day fall on each repective date on started_at column. The result will be in number format of 1 to 7, where 1 represents Sunday and 7 represents Saturday. Unfortunately, I won't be using the results from this new column for some reasons which I will explain later in **conclusion part**.
+The next step I did was to create another new column called "day_of_week" where I will be using WEEKDAY() function to extract what day fall on each repective date on started_at column. The result will be in number format of 1 to 7, where 1 represents Sunday and 7 represents Saturday.
 
 After I've done modifying the Excel file, I convert them back to csv file so it can be use in the next step processing in SQL.
 
@@ -51,56 +51,160 @@ Actually, there are more things to be cleaned like plenty of missing values (NUL
 ### 3.2. SQL (BigQuery)
 In this step, I started by importing all 12 csv files into BigQuery. However, since some of the csv files are quite big (more than 100 MB), so I decided to transfer them all to Google Cloud Drive. Once all the files completely imported to BigQuery then I continue with data cleaning processes.
 
-a. First, I combined those 12 tables into one single table by using UNION ALL in this [following query](https://console.cloud.google.com/bigquery?sq=505738757381:411ddfd2ae884edb81b0dbec661c55f3):
-
-SELECT *<br />
-FROM <br />
-( <br />
-SELECT * <br />
-FROM `capstone-case-1.cyclistic_monthly.tripdata_202112` <br />
-UNION ALL <br />
-SELECT * <br />
-FROM `capstone-case-1.cyclistic_monthly.tripdata_202201` <br />
-UNION ALL <br />
-SELECT * <br />
-FROM `capstone-case-1.cyclistic_monthly.tripdata_202202` <br />
-UNION ALL <br />
-SELECT * <br />
-FROM `capstone-case-1.cyclistic_monthly.tripdata_202203` <br />
-UNION ALL <br />
-SELECT * <br />
-FROM `capstone-case-1.cyclistic_monthly.tripdata_202204` <br />
-UNION ALL <br />
-SELECT * <br />
-FROM `capstone-case-1.cyclistic_monthly.tripdata_202205` <br />
-UNION ALL <br />
-SELECT * <br />
-FROM `capstone-case-1.cyclistic_monthly.tripdata_202206` <br />
-UNION ALL <br />
-SELECT * <br />
-FROM `capstone-case-1.cyclistic_monthly.tripdata_202207` <br />
-UNION ALL <br />
-SELECT * <br />
-FROM `capstone-case-1.cyclistic_monthly.tripdata_202208` <br />
-UNION ALL <br />
-SELECT * <br />
-FROM `capstone-case-1.cyclistic_monthly.tripdata_202209` <br />
-UNION ALL <br />
-SELECT * <br />
-FROM `capstone-case-1.cyclistic_monthly.tripdata_202210` <br />
-UNION ALL <br />
-SELECT * <br />
-FROM `capstone-case-1.cyclistic_monthly.tripdata_202211` <br />
-) <br />
-
-The combined table then named as "tripdata_12months" which consist of 4,334,153 rows of data. from December 2021 to November 2022.
+a. First, I combined those 12 tables into one single table by using UNION ALL in this following query:
+```sql
+SELECT *
+FROM
+( 
+SELECT *
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202112`
+UNION ALL
+SELECT *
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202201`
+UNION ALL
+SELECT *
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202202`
+UNION ALL
+SELECT *
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202203`
+UNION ALL
+SELECT *
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202204`
+UNION ALL
+SELECT *
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202205`
+UNION ALL
+SELECT *
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202206`
+UNION ALL
+SELECT *
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202207`
+UNION ALL
+SELECT *
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202208`
+UNION ALL
+SELECT *
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202209`
+UNION ALL
+SELECT *
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202210`
+UNION ALL
+SELECT *
+FROM `capstone-case-1.cyclistic_monthly.tripdata_202211`
+)
+```
+The combined table then named as **tripdata_12months**.
 
 b. The next step is to remove all rows where the start_station_name or end_station_name have null values:
-
-DELETE FROM `capstone-case-1.cyclistic_monthly.tripdata_12months` <br />
-WHERE start_station_name IS NULL OR end_station_name IS NULL <br />
-
+```sql
+DELETE FROM `capstone-case-1.cyclistic_monthly.tripdata_12months`
+WHERE start_station_name IS NULL OR end_station_name IS NULL
+```
 c. Then I removed all rows where the ride_length below 1 minute:
+```sql
+DELETE FROM `capstone-case-1.cyclistic_monthly.tripdata_12months`
+WHERE ride_length < '00:01:00'
+```
+## 4. Analysis
+In order to answer the first question on "how do annual members and casual riders use Cyclistic bikes differently", first, I will run a query to summarize the total number of users from casual users and member users on day and month basis, and also calculate their average ride length.
+```sql
+-- This query is to summarize the number of users and their average ride length from casual and member users in every day and month.
+SELECT 
+  member_casual AS user_type,
+  --The following subquery is to extract year and month from TIMESTAMP data.
+  CONCAT(
+    CAST(EXTRACT(YEAR from started_at) AS string), 
+    LPAD(CAST(EXTRACT(MONTH from started_at) AS string),3,' 0') 
+    )  AS trip_time,
+  COUNT(member_casual) AS no_of_user,
+  -- The following subquery is to count average ride length for each user type in every month. 
+  TIME(
+     EXTRACT(hour   FROM AVG(ride_length - '0:0:0')), 
+     EXTRACT(minute FROM AVG(ride_length - '0:0:0')), 
+     EXTRACT(second FROM AVG(ride_length - '0:0:0'))
+   ) AS avg_ride_length,
+  day_of_week
+  
+FROM `capstone-case-1.cyclistic_monthly.tripdata_12months`
 
-DELETE FROM `capstone-case-1.cyclistic_monthly.tripdata_12months` <br />
-WHERE ride_length <= '00:00:59' <br />
+GROUP BY trip_time, user_type, day_of_week
+ORDER BY trip_time, user_type, day_of_week
+```
+The result table will look like this
+
+![image](https://user-images.githubusercontent.com/122529512/212571488-1be92ca1-13a8-47fa-89d7-29e765e60ae4.png)
+
+
+Although member users seem bigger than casual user in total, I'd like to dig deeper to see if there are chances that some stations are actually attract more casual users than member users. For this reason, I created 2 new tables which are extracted from tripdata_12months table. Those 2 tables will contain data about total number of casual users and member users in each start station and end station. The queries are such follow: 
+```sql
+-- This query is used to calculate total number of casual user and member user in each start station.
+SELECT 
+  DISTINCT start_station_name,
+  COUNT(CASE member_casual WHEN 'casual'THEN 1 else null end) AS casual_user,
+  COUNT(CASE member_casual WHEN 'member'THEN 1 else null end) AS member_user
+    
+FROM `capstone-case-1.cyclistic_monthly.tripdata_12months`
+GROUP BY start_station_name
+ORDER BY casual_user DESC, member_user DESC
+```
+
+```sql
+-- This query is used to calculate total number of casual user and member user in each end station.
+SELECT 
+  DISTINCT end_station_name,
+    COUNT(CASE member_casual WHEN 'casual'THEN 1 else null end) AS casual_user,
+  COUNT(CASE member_casual WHEN 'member'THEN 1 else null end) AS member_user
+    
+FROM `capstone-case-1.cyclistic_monthly.tripdata_12months`
+GROUP BY end_station_name
+ORDER BY casual_user DESC, member_user DESC
+```
+
+And the result tables are shown like these:
+
+![image](https://user-images.githubusercontent.com/122529512/212580883-72c65f8a-df73-49a5-bbb9-21938ef41d52.png)
+
+![image](https://user-images.githubusercontent.com/122529512/212580901-5b4eac5b-4bbe-4167-aaf2-4c5451932107.png)
+
+
+From the 2 tables shown above, it's pretty obvious that there are actually some stations that has significantly higer number or casual users compared to member user. Moreover, we could see that some of these stations are function as both start station and end station with higher number of casual users. For this reason, I tried to create a comparison table by joining the previous 2 tables (start station users and end station users) to show only stations that function as both start and end station with higher casual users number than the member users. I limit the number of result by only showing stations with at least 1000 users.  
+
+```sql
+-- This query is to make a comparison table between stations with higher casual users than member users.
+SELECT 
+  start_station_name,
+  start_user.casual_user AS start_station_casual,
+  start_user.member_user AS start_station_member,
+  end_station_name,
+  end_user.casual_user AS end_station_casual,
+  end_user.member_user AS end_station_member
+
+-- To join results of stations which both function as start station and end station.
+FROM `capstone-case-1.cyclistic_monthly.start_stations_users` AS start_user
+JOIN `capstone-case-1.cyclistic_monthly.end_stations_users` AS end_user
+ON start_user.start_station_name = end_user.end_station_name
+
+-- Set conditions where casual users in start stations and end stations are bigger than member users, and bigger than 1000 users.
+WHERE start_user.casual_user>start_user.member_user AND end_user.casual_user>end_user.member_user AND start_user.casual_user>1000 AND end_user.casual_user>1000
+
+-- Order the result from highest number to lowest.
+ORDER BY start_user.casual_user DESC, end_user.casual_user DESC
+```
+
+And here's the result table
+
+![image](https://user-images.githubusercontent.com/122529512/212584451-9e74c94d-0034-4ff5-9e7a-451170ec7add.png)
+![image](https://user-images.githubusercontent.com/122529512/212584471-ae43960b-1eea-4871-ad36-c6c8f6574295.png)
+
+The table shows that there are 30 stations that both function as start station and end station with significantly higher casual users than end users.
+
+**Analysis Summary**
+1. Total number of member users are higher than casual users.
+2. However, when I dig deeper to each stations I found that there are some stations that have significantly higher casual users than member users.
+3. On average, casual users use the bike sharing service longer than member users.
+4. There are significant increase of user number during mid year which brings me to a hypothesis that people mobility are correlated with seasons.
+
+
+## 5. Sharing the Insight
+
+
