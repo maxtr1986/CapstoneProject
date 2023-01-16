@@ -1,6 +1,27 @@
 # Google Data Analytics Capstone Project
 ## How Does a Bike-Share Navigate Speedy Success?
 
+## Table of Contents
+[1. Introduction](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#1-introduction)  
+[1.1. Case Background](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#11-case-background)  
+[1.2. The Goal and Business Task](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#12-the-goal-and-business-tasks)  
+[1.3. The Stakeholders](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#13-the-stakeholders)
+
+[2. Data Preparation](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#2-data-preparation)
+
+[3. Processing the Data](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#3-processing-the-data)  
+[3.1. Spreadsheet](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#31-spreadsheet)  
+[3.2. SQL (BigQuery)](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#32-sql-bigquery)  
+
+[4. Analysis](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#4-analysis)  
+
+[5. Sharing the Findings](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#5-sharing-the-findings)  
+[5.1. Difference Number of User](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#51-difference-number-of-user)  
+[5.2. Top 30 Stations with More Casual Users](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#52-top-30-stations-with-more-casual-user)  
+
+[6. Closing](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#6-closing)  
+
+
 ## 1. Introduction
 Cyclistic is a fictional bike-share company located in Chicago. Cyclistic offers a bike-share program that features more than 5,800 bicycles and 600 docking stations througout the state. It also offers reclining bikes, hand tricycles, and cargo bikes to make bike-share more inclusive to people with disabilities and riders who can't use a standard two-wheeled bike. The majority of riders opt for traditional bikes, and about 8% of riders use the assistive options. Cyclistic users are more likely to ride for leisure, but about 30% use them to commute to work each day. 
 
@@ -20,7 +41,9 @@ The analysis will be done by using Cyclistic historical bike trip data to identi
 ### 1.3. The Stakeholders
 1. Lily Moreno: The director of marketing. Moreno is responsible for the development of campaigns and initiatives to promote the bike-share program. These may include email, social media, and other channels.
 2. Cyclistic marketing analytics team: A team of data analysts who are responsible for collecting, analyzing, and reporting data that helps guide Cyclistic marketing strategy.
-3. Cyclistic executive team: The executive team that will decide whether to approve the recommended marketing program.
+3. Cyclistic executive team: The executive team that will decide whether to approve the recommended marketing program.  
+
+[Back to Table of Contents](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#table-of-contents)
 
 
 ## 2. Data Preparation
@@ -29,6 +52,7 @@ In order to analyze the business tasks given, first I will need to download [Cyc
 
 All the downloaded files will be saved in a folder named cyclistic_1year_data, then I will extract each one of them so I will get the csv files. After that, I rename all those csv name as cyclistic_tripdata_[yyyymm].csv and sort them according to the period.
 
+[Back to Table of Contents](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#table-of-contents)
 
 ## 3. Processing the Data
 During this step, I will be using spreadsheet (MS Excel) and SQL (BigQuery).
@@ -105,6 +129,9 @@ c. Then I removed all rows where the ride_length below 1 minute:
 DELETE FROM `capstone-case-1.cyclistic_monthly.tripdata_12months`
 WHERE ride_length < '00:01:00'
 ```
+
+[Back to Table of Contents](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#table-of-contents)
+
 ## 4. Analysis
 In order to answer the first question on "how do annual members and casual riders use Cyclistic bikes differently", first, I will run a query to summarize the total number of users from casual users and member users on day and month basis, and also calculate their average ride length.
 ```sql
@@ -204,6 +231,8 @@ The table shows that there are 30 stations that both function as start station a
 3. On average, casual users use the bike sharing service longer than member users.
 4. There are significant increase of user number during mid year which brings me to a hypothesis that people mobility are correlated with seasons.
 
+[Back to Table of Contents](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#table-of-contents)
+
 
 ## 5. Sharing the Findings
 
@@ -230,11 +259,17 @@ The following table will show a list of stations which function as both start st
 
 Since the main goal for this analysis was to convert casual users to member users, I find that this table will be usefull for targeted advertisement. I choose a simple table format so the stakeholders could easily see where they might want to intensify their marketing program in order to convert more casual users.
 
+[Back to Table of Contents](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#table-of-contents)
+
+
 ## 6. Closing
 
 Based on the previous analysis and findings, here are my top 3 recommendations according to the business task given before:
 1. Target the top 30 stations (or less if there's budget constraint) to intensify marketing programs and advertisement.
 2. Provide special rates to attract existing casual users to convert as member, such as family membership, member get member perks, etc.
-3. Use digital services for advertisement, such as location based SMS or promotion email to existing members, social media page, or install screen billboards on those top list stations.  
+3. Use digital services for advertisement, such as location based SMS or promotion email to existing members, social media page, or install screen billboards on those top list stations. 
+
+[Back to Table of Contents](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#table-of-contents)
+
 
 
