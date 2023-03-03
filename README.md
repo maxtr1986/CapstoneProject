@@ -3,22 +3,17 @@
 
 ## Table of Contents
 [1. Introduction](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#1-introduction)  
-[1.1. Case Background](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#11-case-background)  
-[1.2. The Goal and Business Task](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#12-the-goal-and-business-tasks)  
-[1.3. The Stakeholders](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#13-the-stakeholders)
-
-[2. Data Preparation](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#2-data-preparation)
-
+|    [1.1. Case Background](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#11-case-background)  
+|    [1.2. The Goal and Business Task](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#12-the-goal-and-business-tasks)  
+|    [1.3. The Stakeholders](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#13-the-stakeholders)  
+[2. Data Preparation](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#2-data-preparation)  
 [3. Processing the Data](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#3-processing-the-data)  
-[3.1. Spreadsheet](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#31-spreadsheet)  
-[3.2. SQL (BigQuery)](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#32-sql-bigquery)  
-
+|    [3.1. Spreadsheet](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#31-spreadsheet)  
+|    [3.2. SQL (BigQuery)](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#32-sql-bigquery)  
 [4. Analysis](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#4-analysis)  
-
 [5. Sharing the Findings](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#5-sharing-the-findings)  
-[5.1. Difference Number of User](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#51-difference-number-of-user)  
-[5.2. Top 30 Stations with More Casual Users](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#52-top-30-stations-with-more-casual-user)  
-
+|    [5.1. Difference Number of User](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#51-difference-number-of-user)  
+|    [5.2. Top 30 Stations with More Casual Users](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#52-top-30-stations-with-more-casual-user)  
 [6. Closing](https://github.com/maxtr1986/CapstoneProject/edit/main/README.md#6-closing)  
 
 
